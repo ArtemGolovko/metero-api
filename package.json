@@ -1,6 +1,6 @@
 {
   "name": "metero-api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Metero api client.",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -31,13 +31,15 @@
     "url": "https://github.com/ArtemGolovko/metero-api/issues"
   },
   "homepage": "https://github.com/ArtemGolovko/metero-api#readme",
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
-    "axios": "^0.24.0",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
