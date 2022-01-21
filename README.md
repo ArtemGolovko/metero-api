@@ -2,7 +2,7 @@
 
 > Metero api client.
 
-[![NPM](https://img.shields.io/npm/v/metero-api.svg)](https://www.npmjs.com/package/auth-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/metero-api.svg)](https://www.npmjs.com/package/metero-api) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 ```bash
