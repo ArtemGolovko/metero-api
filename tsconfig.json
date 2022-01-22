@@ -6,7 +6,8 @@
         "declaration": true,
         "rootDir": "./src",
         "esModuleInterop": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "strict": true
     },
     "exclude": ["node_modules", "jest.config.ts", "test"]
 }

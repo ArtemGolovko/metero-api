@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders, AxiosResponse, Method } from 'axios';
+import buildPHPQuery from 'build-php-query';
 
 const apiURL = 'https://api.metero.pp.ua/';
 const formats = {
@@ -47,7 +48,7 @@ class ApiClient {
         const mergedQueryParameters = { page: 1, ...queryParameters };
         return this.createAxiosRequest<T>({
             method: 'get',
-            url: 'users?' + toQuery(mergedQueryParameters),
+            url: 'users?' + buildPHPQuery(mergedQueryParameters),
             statusCode: 200,
         });
     }
@@ -73,7 +74,7 @@ class ApiClient {
         const mergedQueryParameters = { page: 1, ...queryParameters };
         return this.createAxiosRequest<T>({
             method: 'get',
-            url: 'posts?' + toQuery(mergedQueryParameters),
+            url: 'posts?' + buildPHPQuery(mergedQueryParameters),
             statusCode: 200,
         });
     }
@@ -136,10 +137,7 @@ class ApiClient {
             validateStatus: (status: number): boolean => {
                 return status === options.statusCode;
             },
-            headers: this.getHeaders(
-                 ['post', 'put', 'patch'].includes(options.method.toLowerCase()),
-                options.method.toLowerCase() === 'patch',
-            ),
+            headers: this.getHeaders(options.method),
         };
 
         if (undefined !== options.body) {
@@ -151,12 +149,12 @@ class ApiClient {
         });
     }
 
-    private getHeaders(hasBody: boolean, isPatch: boolean): AxiosRequestHeaders {
+    private getHeaders(method: Method): AxiosRequestHeaders {
         const headers: AxiosRequestHeaders = {
             accept: formats[this.format],
         };
-        if (hasBody) {
-            headers['Content-Type'] = (isPatch) ? patchMime : formats[this.format];
+        if (['post', 'put', 'patch'].includes(method.toLowerCase())) {
+            headers['Content-Type'] = method.toLowerCase() === 'patch' ? patchMime : formats[this.format];
         }
 
         if (this.accessToken !== null) {
@@ -166,94 +164,5 @@ class ApiClient {
         return headers;
     }
 }
-
-// type QueryObject = Record<string|number|boolean, boolean|null|undefined|string|number|object>;
-
-// no ts start
-function toQuery(obj: object): string {
-    const query = [];
-    for (const name in obj) {
-        const value = obj[name];
-        if (!isScalar(value)) {
-            if (!isTrueArray(value)) {
-                toObject(value, encodeURIComponent(name), query);
-                continue;
-            }
-
-            toTrueArray(value, encodeURIComponent(name), query);
-            continue;
-        }
-        query.push(encodeURIComponent(name) + '=' + toScalar(value));
-    }
-
-    return query.join('&');
-}
-
-function isScalar(value: any): boolean {
-    return !(value !== null && value !== undefined && typeof value === 'object');
-}
-
-function toScalar(scalar: boolean | null | undefined | string | number): string {
-    if (scalar === true) {
-        return 'true';
-    }
-
-    if (scalar === false) {
-        return 'false';
-    }
-
-    if (scalar === null || scalar === undefined) {
-        return '';
-    }
-
-    return encodeURIComponent(scalar);
-}
-
-function toObject(obj: object, name: string, query: Array<string>): void {
-    for (const key in obj) {
-        const value = obj[key];
-        if (!isScalar(value)) {
-            if (!isTrueArray(value)) {
-                toObject(value, name + '[' + encodeURIComponent(key) + ']', query);
-                continue;
-            }
-
-            toTrueArray(value, name + '[' + encodeURIComponent(key) + ']', query);
-            continue;
-        }
-
-        query.push(name + '[' + encodeURIComponent(key) + ']=' + toScalar(value));
-    }
-}
-
-function isTrueArray(obj: any): boolean {
-    if (!Array.isArray(obj)) {
-        return false;
-    }
-
-    for (const value of obj) {
-        if (!isScalar(value) && !(Object.keys(value).length === 1 || Object.keys(value).length === 0)) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-function toTrueArray(array: Array<any>, name: string, query: Array<string>): void {
-    for (const value of array) {
-        if (!isScalar(value)) {
-            if (!isTrueArray(value)) {
-                toObject(value, name + '[]', query);
-                continue;
-            }
-
-            toTrueArray(value, name + '[]', query);
-            continue;
-        }
-        query.push(name + '[]=' + toScalar(value));
-    }
-}
-// no ts end
 
 export default ApiClient;
