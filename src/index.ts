@@ -31,7 +31,7 @@ interface AxiosConfig {
     url: string;
     validateStatus: (status: number) => boolean;
     headers: AxiosRequestHeaders;
-    body?: object;
+    data?: object;
 }
 
 class ApiClient {

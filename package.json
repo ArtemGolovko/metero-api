@@ -1,6 +1,6 @@
 {
   "name": "metero-api",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Metero api client.",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
