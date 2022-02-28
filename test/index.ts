@@ -131,13 +131,13 @@ describe('Api Test', () => {
         expect(call.url).toEqual(apiURL + 'users/Username1');
         expect(call.validateStatus(200)).toBeTruthy();
         expect(call.validateStatus(201)).toBeFalsy();
-        expect(call.body).toEqual(users[0]);
+        expect(call.data).toEqual(users[0]);
         expect(Object.keys(call.headers).length).toEqual(2);
         expect(call.headers.hasOwnProperty('accept')).toBeTruthy();
         expect(call.headers.accept).toEqual('application/json');
         expect(call.headers.hasOwnProperty('Content-Type')).toBeTruthy();
         expect(call.headers['Content-Type']).toEqual('application/merge-patch+json');
-        expect(call.body).toEqual(users[0]);
+        expect(call.data).toEqual(users[0]);
     });
 
     it('Get Posts', () => {
@@ -178,7 +178,7 @@ describe('Api Test', () => {
         expect(call.headers.accept).toEqual('application/json');
         expect(call.headers.hasOwnProperty('Content-Type')).toBeTruthy();
         expect(call.headers['Content-Type']).toEqual('application/json');
-        expect(call.body).toEqual(posts[0]);
+        expect(call.data).toEqual(posts[0]);
     });
 
     it('Get Post', () => {
@@ -217,7 +217,7 @@ describe('Api Test', () => {
         expect(call.headers.accept).toEqual('application/json');
         expect(call.headers.hasOwnProperty('Content-Type')).toBeTruthy();
         expect(call.headers['Content-Type']).toEqual('application/json');
-        expect(call.body).toEqual(posts[0]);
+        expect(call.data).toEqual(posts[0]);
     });
 
     it('Delete Post', () => {
@@ -256,6 +256,6 @@ describe('Api Test', () => {
         expect(call.headers.accept).toEqual('application/json');
         expect(call.headers.hasOwnProperty('Content-Type')).toBeTruthy();
         expect(call.headers['Content-Type']).toEqual('application/merge-patch+json');
-        expect(call.body).toEqual(posts[0]);
+        expect(call.data).toEqual(posts[0]);
     });
 });

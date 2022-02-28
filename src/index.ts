@@ -141,7 +141,7 @@ class ApiClient {
         };
 
         if (undefined !== options.body) {
-            axiosConfig.body = options.body;
+            axiosConfig.data = options.body;
         }
 
         return axios.request(axiosConfig).then((resp: AxiosResponse<T>): T => {
